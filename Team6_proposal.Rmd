@@ -56,6 +56,12 @@ How strongly does air quality / pollution contribute to risk of chronic respirat
 
 ### Anticipated Results
 
+- Urban Citizen risk: Categorized bar chart by level of urbanism
+- Describing Dangerous Counties : detailed map color-coded by air quality
+- Air Quality over time : line plot (x=time, y=quality), scatterplot(air quality vs population)
+
+
+
 ### Member Contributions
 
 
