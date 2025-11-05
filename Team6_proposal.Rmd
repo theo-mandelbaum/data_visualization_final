@@ -1,0 +1,62 @@
+---
+title: "Team 6 Project Proposal"
+subtitle: 'Math 268: Data Analysis and Visualization'
+author: 'Joseph Linneman, Theo Mandelbaum, Rose Villareale'
+date: "Due 11/7/2025"
+output:
+  html_document:
+    highlight: espresso
+    theme: spacelab
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+    fig_caption: true
+    df_print: tibble
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,   
+  message = FALSE
+)
+```
+
+
+```{r echo=FALSE}
+library(tidyverse)
+library(here)
+
+```
+
+
+### Project Idea/Research Question
+
+How strongly does air quality / pollution contribute to risk of chronic respiratory illness?
+
+#### Followup Questions
+
+- How much more at risk are urban citizens in this context?
+- What are some of the most dangerous counties to live in, regarding these factors?
+- How has air quality worsened or improved over time and how has that affected chronic illness rates?
+
+
+
+### Data and Data Source
+
+#### Data on Chronic Disease Infection
+
+[Link to Dataset](https://catalog.data.gov/dataset/u-s-chronic-disease-indicators)
+
+
+#### Data on National Air Quality Metrics
+[Link to Dataset](https://catalog.data.gov/dataset/air-quality-measures-on-the-national-environmental-health-tracking-network)
+
+
+
+### Anticipated Results
+
+### Member Contributions
+
+
+
