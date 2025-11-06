@@ -28,6 +28,13 @@ library(tidyverse)
 library(here)
 
 ```
+![An air-polluted highway in India](https://www.usatoday.com/gcdn/-mm-/471aaf7f3239eea52e40fa1593f3f5fe323c72a4/c=0-266-3225-2088/local/-/media/2017/11/08/USATODAY/USATODAY/636457399868151922-AP-India-Air-Pollution.5.jpg)
+
+
+
+## Topics: Air quality, Pollution, Human Illness
+
+
 
 
 ### Project Idea/Research Question
@@ -52,6 +59,8 @@ How strongly does air quality / pollution contribute to risk of chronic respirat
 #### Data on National Air Quality Metrics
 [Link to Dataset](https://catalog.data.gov/dataset/air-quality-measures-on-the-national-environmental-health-tracking-network)
 
+![Example data selection]()
+
 
 
 ### Anticipated Results
@@ -63,6 +72,9 @@ How strongly does air quality / pollution contribute to risk of chronic respirat
 
 
 ### Member Contributions
+Theo: 
+Rose:     
+Joseph: Developed this file in coordination with team; examined data sources, created and refined research questions.
 
 
 
