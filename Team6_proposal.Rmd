@@ -55,7 +55,7 @@ How strongly does air quality / pollution contribute to risk of chronic respirat
 
 [Link to Dataset](https://catalog.data.gov/dataset/u-s-chronic-disease-indicators)
 
-#### Here is a snippet of our data, specifically the way tha the values are measured.
+#### Here is a snippet of our data, specifically the way that the values are measured.
 
 ![](./images/chronic_disease_data_units.png)
 
@@ -65,13 +65,24 @@ How strongly does air quality / pollution contribute to risk of chronic respirat
 
 
 #### Data on National Air Quality Metrics
-[Link to Dataset](https://catalog.data.gov/dataset/air-quality-measures-on-the-national-environmental-health-tracking-network)
 
-#### Now, a snippet for the air quality metrics.
+[Link to Dataset](https://aqs.epa.gov/aqsweb/airdata/download_files.html)
 
-![](./images/air_quality_data_selection.png)
+### About the dataset
 
+The link provided directs you to a webpage with a number of downloadable csv files. For our research, we are using the the Annual Summary Data, specifically the annual aqi data by county for the years from 2015-2021. So, we are using 7 different csv files, but they are all the same structure. The air quality is measure by AQI (Air Quality Index), which is a tool to report on air pollution levels, communicating potential health risks with a single number. The higher the AQI, the worse the air quality is.
 
+#### Here are some snippets for the air quality metrics.
+
+![](./images/air_quality1.png)
+
+![](./images/air_quality2.png)
+
+As you can see, each entry has a state, county, and year, allowing use to isolate big cities in the US. In terms of the data collection, we can see how many days deemed were healthy, unhealthy, unhealthy for sensitive groups, hazardous, etc. First, we will sort by state, as that's the data field that both of the data sets share in common. Once we've sorted the air quality data by states, we can compare the AQI measurements and the day totals, to other states.
+
+Now that we've sorted our air quality data we can handle our chronic disease data. Similar to the air quality, we will sort the chronic diseases based on state; this field is called "LocationAbbr" in the chronic diseases data. In order to isolate respiratory illness, we'll sort this data by "Topic," specifying what type of disease the rows represents.
+
+Once we've sorted both data sets as described above, we can answer the question; How strongly does air quality / pollution contribute to risk of chronic respiratory illness?
 
 
 ### Anticipated Results
