@@ -34,18 +34,19 @@ library(here)
 
 ## Topics: Air quality, Pollution, Human Illness
 
+We wanted to investigate the effects of pollution on chronic illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses since they would most likely be most affected by air quality compared to other forms of chronic illnesses. 
 
 
+### Project Research Question
 
-### Project Idea/Research Question
-
-How strongly does air quality / pollution contribute to risk of chronic respiratory illness?
+Does air quality have an effect on the risk of chronic respiratory illness?
 
 #### Followup Questions
 
-- How much more at risk are urban citizens in this context?
-- What are some of the most dangerous counties to live in, regarding these factors?
-- How has air quality worsened or improved over time and how has that affected chronic illness rates?
+- Does living closer to cities, in more urban areas, have an effect on the risk of chronic respiratory illness?
+- Does living in areas with higher populations, have an effect on the risk of chronic respiratory illness?
+- What are some of the most dangerous counties to live in based on rates of chronic respiratory illness?
+- How has air quality changed over time and how has it affected chronic illness rates?
 
 
 
@@ -87,9 +88,10 @@ Once we've sorted both data sets as described above, we can answer the question;
 
 ### Anticipated Results
 
-- Urban Citizen risk: Categorized bar chart by level of urbanism, scatterplot(air quality vs population)
-- Describing Dangerous Counties : detailed map color-coded by air quality
-- Air Quality over time : line plot (x=time, y=quality) 
+- Urban Citizen risk: Categorized bar chart by how urban an area is or how far from major cities
+- Population size: Scatter plot with air quality on the y-axis and population on the x-axis
+- Most Dangerous Counties: detailed map where color represents the level of air quality
+- Air Quality over time: line plot with time on the x-axis and air quality on the y- axis
 
 
 
