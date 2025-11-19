@@ -111,6 +111,9 @@ chronic_diseases %>%
 ```
 
 
+### Proposal Expectations Evaluation 
+
+As we looked further into our data set we decided to filter the chronic illness data by specific illnesses. We chose to look at Asthma, respiratory illnesses, and lung, throat, and breast cancer. We chose these since they would be more likely to be affected by poor air quality. We also noticed that the data on chronic illnesses was sorted by state so we chose to define how urban a state is by population since we would not be able to compare counties that did and did not have major cities within them. We also felt the population of the state was a better measure than the number of major cities within the state because defining a major city would be based on population. We anticipated a positive correlation between the Air Quality Index (AQI) of a state and rates of illnesses. We also anticipated that higher populations of a state would have a positive correlation with AQI. 
 
 ### Anticipated Results
 
@@ -119,8 +122,6 @@ chronic_diseases %>%
 - Most Dangerous Counties: Detailed map where color represents the level of air quality
 - Air Quality over time: Line plot with time on the x-axis and air quality on the y- axis
 
-Title
-As we looked further into our data set we decided to filter the chronic illness data by specific illnesses. We chose to look at Asthma, respiratory illnesses, and lung, throat, and breast cancer. We chose these since they would be more likely to be affected by poor air quality. We also noticed that the data on chronic illnesses was sorted by state so we chose to define how urban a state is by population since we would not be able to compare counties that did and did not have major cities within them. We also felt the population of the state was a better measure than the number of major cities within the state because defining a major city would be based on population. 
 
 
 ### Member Contributions
