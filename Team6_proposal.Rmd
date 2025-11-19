@@ -34,7 +34,7 @@ library(here)
 
 ## Topics: Air quality, Pollution, Human Illness
 
-We wanted to investigate the effects of pollution on chronic illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses since they would most likely be most affected by air quality compared to other forms of chronic illnesses. 
+We wanted to investigate the effects of pollution on chronic illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses and cancers since they would most likely be most affected by air quality compared to other forms of chronic illnesses. 
 
 
 ### Project Research Question
@@ -90,9 +90,11 @@ Once we've sorted both data sets as described above, we can answer the question;
 
 - Urban Citizen risk: Categorized bar chart by how urban an area is or how far from major cities
 - Population size: Scatter plot with air quality on the y-axis and population on the x-axis
-- Most Dangerous Counties: detailed map where color represents the level of air quality
-- Air Quality over time: line plot with time on the x-axis and air quality on the y- axis
+- Most Dangerous Counties: Detailed map where color represents the level of air quality
+- Air Quality over time: Line plot with time on the x-axis and air quality on the y- axis
 
+Title
+As we looked further into our data set we decided to filter the chronic illness data by specific illnesses. We chose to look at Asthma, respiratory illnesses, and lung, throat, and breast cancer. We chose these since they would be more likely to be affected by poor air quality. We also noticed that the data on chronic illnesses was sorted by state so we chose to define how urban a state is by population since we would not be able to compare counties that did and did not have major cities within them. We also felt the population of the state was a better measure than the number of major cities within the state because defining a major city would be based on population. 
 
 
 ### Member Contributions
