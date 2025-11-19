@@ -1,5 +1,5 @@
 ---
-title: "Team 6 Project Proposal"
+title: "The Effect of Air Quality on Respiratory Illnesses"
 subtitle: 'Math 268: Data Analysis and Visualization'
 author: 'Joseph Linneman, Theo Mandelbaum, Rose Villareale'
 date: "Due 11/7/2025"
@@ -27,6 +27,14 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(here)
 
+chronic_diseases <- read.csv(here("../U.S._Chronic_Disease_Indicators.csv"))
+air_quality_2015 <- read.csv(here("../annual_aqi_by_county_2015.csv"))
+air_quality_2016 <- read.csv(here("../annual_aqi_by_county_2016.csv"))
+air_quality_2017 <- read.csv(here("../annual_aqi_by_county_2017.csv"))
+air_quality_2018 <- read.csv(here("../annual_aqi_by_county_2018.csv"))
+air_quality_2019 <- read.csv(here("../annual_aqi_by_county_2019.csv"))
+air_quality_2020 <- read.csv(here("../annual_aqi_by_county_2020.csv"))
+air_quality_2021 <- read.csv(here("../annual_aqi_by_county_2021.csv"))
 ```
 ![An air-polluted highway in India](https://www.usatoday.com/gcdn/-mm-/471aaf7f3239eea52e40fa1593f3f5fe323c72a4/c=0-266-3225-2088/local/-/media/2017/11/08/USATODAY/USATODAY/636457399868151922-AP-India-Air-Pollution.5.jpg)
 
@@ -71,7 +79,7 @@ Does air quality have an effect on the risk of chronic respiratory illness?
 
 ### About the dataset
 
-The link provided directs you to a webpage with a number of downloadable csv files. For our research, we are using the the Annual Summary Data, specifically the annual aqi data by county for the years from 2015-2021. So, we are using 7 different csv files, but they are all the same structure. The air quality is measure by AQI (Air Quality Index), which is a tool to report on air pollution levels, communicating potential health risks with a single number. The higher the AQI, the worse the air quality is.
+The link provided directs you to a webpage with a number of downloadable csv files. For our research, we are using the the Annual Summary Data, specifically the annual aqi data by county for the years from 2015-2021. So, we are using 7 different csv files, but they are all the same structure, with each file representing a different year. The air quality is measure by AQI (Air Quality Index), which is a tool to report on air pollution levels, communicating potential health risks with a single number. The higher the AQI, the worse the air quality is.
 
 #### Here are some snippets for the air quality metrics.
 
@@ -84,6 +92,24 @@ As you can see, each entry has a state, county, and year, allowing use to isolat
 Now that we've sorted our air quality data we can handle our chronic disease data. Similar to the air quality, we will sort the chronic diseases based on state; this field is called "LocationAbbr" in the chronic diseases data. In order to isolate respiratory illness, we'll sort this data by "Topic," specifying what type of disease the rows represents.
 
 Once we've sorted both data sets as described above, we can answer the question; How strongly does air quality / pollution contribute to risk of chronic respiratory illness?
+
+#### Given these datasets, we need to filter the chronic diseases data to figure out which diseases can be labelled as respiratory
+
+First, we'll look at all of the possible options for the Topic columns:
+
+```{r}
+unique_topics <- unique(chronic_diseases$Topic)
+print(unique_topics)
+```
+
+
+```{r}
+chronic_diseases %>%
+  filter(Topic == "Cancer") %>%
+  pull(Question) %>%
+  unique()
+```
+
 
 
 ### Anticipated Results
