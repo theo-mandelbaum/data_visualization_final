@@ -26,6 +26,7 @@ knitr::opts_chunk$set(
 ```{r echo=FALSE}
 library(tidyverse)
 library(here)
+library(dplyr)
 
 chronic_diseases <- read.csv(here("../U.S._Chronic_Disease_Indicators.csv"))
 air_quality_2015 <- read.csv(here("../annual_aqi_by_county_2015.csv"))
@@ -101,14 +102,109 @@ First, we'll look at all of the possible options for the Topic columns:
 unique_topics <- unique(chronic_diseases$Topic)
 print(unique_topics)
 ```
+Based on the given topics, here's a list of which topics can be categorized as respiratory:
 
+Definitely respiratory:
 
+- "Asthma"
+
+- "Chronic Obstructive Pulmonary Disease"
+
+Could be / need more investigation:
+
+- "Cancer"
+
+- "Tobacco"
+
+- "Sleep"
+
+- "Nutrition, Physical Activity, and Weight Status"
+
+Definitely not respiratory:
+
+- "Mental Health"
+
+- "Diabetes"
+
+- "Immunization"
+
+- "Oral Health"
+
+- "Arthritis"
+
+- "Cardiovascular Disease"
+
+- "Disability"
+
+- "Alcohol"
+
+- "Cognitive Health and Caregiving"
+
+- "Maternal Health"
+
+- "Chronic Kidney Disease"
+
+- "Health Status"
+
+- "Social Determinants of Health"
+
+If you look at the list of topics above, some of them are very broad, so to isolate the respiratory diseases, we will need to view all of the possible options for the Question column, within certain topics. After we've investigated our options the Question column, we can sort our disease data to only include respiratory diseases.
+
+Only lung and bronchial cancer would be respiratory
 ```{r}
 chronic_diseases %>%
   filter(Topic == "Cancer") %>%
   pull(Question) %>%
   unique()
 ```
+
+Rows 1, 2, 4, and 6 are all respiratory issues
+```{r}
+chronic_diseases %>%
+  filter(Topic == "Tobacco") %>%
+  pull(Question) %>%
+  unique()
+```
+
+None of the sleep questions fit a respiratory disease
+```{r}
+chronic_diseases %>%
+  filter(Topic == "Sleep") %>%
+  pull(Question) %>%
+  unique()
+```
+
+Here, row 1, 5 and 10 are all respiratory diseases
+```{r}
+chronic_diseases %>%
+  filter(Topic == "Nutrition, Physical Activity, and Weight Status") %>%
+  pull(Question) %>%
+  unique()
+```
+
+```{r}
+respiratory_diseases <- chronic_diseases %>%
+  filter(
+    Topic %in% c("Asthma", "Cancer", "Tobacco", "Nutrition, Physical Activity, and Weight Status") &
+    (
+      (Topic == "Cancer" & Question == "Lung and bronchial cancer mortality among all people, underlying cause") |
+      (Topic == "Tobacco" & Question %in% c(
+        "Quit attempts in the past year among adult current smokers",
+        "Current cigarette smoking among adults",
+        "Cigarette smoking during pregnancy among women with a recent live birth",
+        "Current electronic vapor product use among high school students"
+      )) |
+      (Topic == "Nutrition, Physical Activity, and Weight Status" & Question %in% c(
+        "Children and adolescents aged 6-13 years meeting aerobic physical activity guideline",
+        "Met aerobic physical activity guideline among high school students",
+        "Met aerobic physical activity guideline for substantial health benefits, adults"
+      )) |
+      (Topic == "Asthma") |
+      (Topic == "Chronic Obstructive Pulmonary Disease")
+    )
+  )
+```
+
 
 
 
