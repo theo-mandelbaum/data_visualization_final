@@ -48,7 +48,7 @@ We wanted to investigate the effects of pollution on chronic illnesses in the Un
 
 ### Project Research Question
 
-What is the strength of the relationship between state-level ozone pollution levels and chronic respiratory illness rates?
+What is the strength of the relationship between state-level ozone pollution and AQI levels with chronic respiratory illness rates?
 
 #### Followup Questions
 
@@ -56,6 +56,7 @@ What is the strength of the relationship between state-level ozone pollution lev
 - Does living in areas with higher populations, have an effect on the risk of chronic respiratory illness?
 - What are some of the most dangerous counties to live in based on rates of chronic respiratory illness?
 - How has air quality changed over time and how has it affected chronic illness rates?
+- Do the levels of ozone in the atmosphere correlate with rates of chronic respiratory illnesses? 
 
 
 
@@ -210,7 +211,7 @@ respiratory_diseases <- chronic_diseases %>%
 
 ### Proposal Expectations Evaluation 
 
-As we looked further into our data set we decided to filter the chronic illness data by specific illnesses. We chose to look at Asthma, respiratory illnesses, and lung, throat, and breast cancer. We chose these since they would be more likely to be affected by poor air quality. We also noticed that the data on chronic illnesses was sorted by state so we chose to define how urban a state is by population since we would not be able to compare counties that did and did not have major cities within them. We also felt the population of the state was a better measure than the number of major cities within the state because defining a major city would be based on population. We anticipated a positive correlation between the Air Quality Index (AQI) of a state and rates of illnesses. We also anticipated that higher populations of a state would have a positive correlation with AQI. 
+As we looked further into our data set we decided to filter the chronic illness data by specific illnesses. We chose to look at Asthma, respiratory illnesses, and lung, throat, and breast cancer. We chose these since they would be more likely to be affected by poor air quality. We also noticed that the data on chronic illnesses was sorted by state so we chose to define how urban a state is by population since we would not be able to compare counties that did and did not have major cities within them. We also felt the population of the state was a better measure than the number of major cities within the state because defining a major city would be based on population. We anticipated a positive correlation between the Air Quality Index (AQI) of a state and rates of illnesses. We also anticipated that higher populations of a state would have a positive correlation with AQI. We also decided to investigate the effects of ozone levels further since it is a more specific variable and is directly linked to the burning of fossil fuels by power plants and vehicles.
 
 ### Anticipated Results
 
