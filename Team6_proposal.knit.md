@@ -15,28 +15,10 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,   
-  message = FALSE
-)
-```
 
 
-```{r echo=FALSE}
-library(tidyverse)
-library(here)
-library(dplyr)
 
-chronic_diseases <- read.csv(here("../U.S._Chronic_Disease_Indicators.csv"))
-air_quality_2015 <- read.csv(here("../annual_aqi_by_county_2015.csv"))
-air_quality_2016 <- read.csv(here("../annual_aqi_by_county_2016.csv"))
-air_quality_2017 <- read.csv(here("../annual_aqi_by_county_2017.csv"))
-air_quality_2018 <- read.csv(here("../annual_aqi_by_county_2018.csv"))
-air_quality_2019 <- read.csv(here("../annual_aqi_by_county_2019.csv"))
-air_quality_2020 <- read.csv(here("../annual_aqi_by_county_2020.csv"))
-air_quality_2021 <- read.csv(here("../annual_aqi_by_county_2021.csv"))
-```
+
 ![An air-polluted highway in India](https://www.usatoday.com/gcdn/-mm-/471aaf7f3239eea52e40fa1593f3f5fe323c72a4/c=0-266-3225-2088/local/-/media/2017/11/08/USATODAY/USATODAY/636457399868151922-AP-India-Air-Pollution.5.jpg)
 
 
@@ -98,9 +80,29 @@ Once we've sorted both data sets as described above, we can answer the question;
 
 First, we'll look at all of the possible options for the Topic columns:
 
-```{r}
+
+``` r
 unique_topics <- unique(chronic_diseases$Topic)
 print(unique_topics)
+##  [1] "Health Status"                                  
+##  [2] "Cancer"                                         
+##  [3] "Diabetes"                                       
+##  [4] "Sleep"                                          
+##  [5] "Immunization"                                   
+##  [6] "Nutrition, Physical Activity, and Weight Status"
+##  [7] "Oral Health"                                    
+##  [8] "Arthritis"                                      
+##  [9] "Asthma"                                         
+## [10] "Cardiovascular Disease"                         
+## [11] "Disability"                                     
+## [12] "Mental Health"                                  
+## [13] "Tobacco"                                        
+## [14] "Alcohol"                                        
+## [15] "Chronic Obstructive Pulmonary Disease"          
+## [16] "Social Determinants of Health"                  
+## [17] "Cognitive Health and Caregiving"                
+## [18] "Chronic Kidney Disease"                         
+## [19] "Maternal Health"
 ```
 Based on the given topics, here's a list of which topics can be categorized as respiratory:
 
@@ -151,39 +153,78 @@ Definitely not respiratory:
 If you look at the list of topics above, some of them are very broad, so to isolate the respiratory diseases, we will need to view all of the possible options for the Question column, within certain topics. After we've investigated our options the Question column, we can sort our disease data to only include respiratory diseases.
 
 Only lung and bronchial cancer would be respiratory
-```{r}
+
+``` r
 chronic_diseases %>%
   filter(Topic == "Cancer") %>%
   pull(Question) %>%
   unique()
+##  [1] "Invasive cancer (all sites combined), incidence"                                  
+##  [2] "Cervical cancer mortality among all females, underlying cause"                    
+##  [3] "Prostate cancer mortality among all males, underlying cause"                      
+##  [4] "Breast cancer mortality among all females, underlying cause"                      
+##  [5] "Invasive cancer (all sites combined) mortality among all people, underlying cause"
+##  [6] "Lung and bronchial cancer mortality among all people, underlying cause"           
+##  [7] "Colon and rectum (colorectal) cancer mortality among all people, underlying cause"
+##  [8] "Mammography use among women aged 50-74 years"                                     
+##  [9] "Cervical cancer screening among women aged 21-65 years"                           
+## [10] "Colorectal cancer screening among adults aged 45-75 years"
 ```
 
 Rows 1, 2, 4, and 6 are all respiratory issues
-```{r}
+
+``` r
 chronic_diseases %>%
   filter(Topic == "Tobacco") %>%
   pull(Question) %>%
   unique()
+## [1] "Quit attempts in the past year among adult current smokers"                                                                                                                         
+## [2] "Current cigarette smoking among adults"                                                                                                                                             
+## [3] "Current smokeless tobacco use among high school students"                                                                                                                           
+## [4] "Cigarette smoking during pregnancy among women with a recent live birth"                                                                                                            
+## [5] "Current tobacco use of any tobacco product among high school students"                                                                                                              
+## [6] "Current electronic vapor product use among high school students"                                                                                                                    
+## [7] "Proportion of the population protected by a comprehensive smoke-free policy prohibiting smoking in all indoor areas of workplaces and public places, including restaurants and bars"
 ```
 
 None of the sleep questions fit a respiratory disease
-```{r}
+
+``` r
 chronic_diseases %>%
   filter(Topic == "Sleep") %>%
   pull(Question) %>%
   unique()
+## [1] "Short sleep duration among children aged 4 months to 14 years"
+## [2] "Short sleep duration among high school students"              
+## [3] "Short sleep duration among adults"
 ```
 
 Here, row 1, 5 and 10 are all respiratory diseases
-```{r}
+
+``` r
 chronic_diseases %>%
   filter(Topic == "Nutrition, Physical Activity, and Weight Status") %>%
   pull(Question) %>%
   unique()
+##  [1] "Children and adolescents aged 6-13 years meeting aerobic physical activity guideline"
+##  [2] "Obesity among adults"                                                                
+##  [3] "No leisure-time physical activity among adults"                                      
+##  [4] "Consumed vegetables less than one time daily among adults"                           
+##  [5] "Met aerobic physical activity guideline among high school students"                  
+##  [6] "Consumed fruit less than one time daily among adults"                                
+##  [7] "Consumed vegetables less than one time daily among high school students"             
+##  [8] "Obesity among high school students"                                                  
+##  [9] "Consumed regular soda at least one time daily among high school students"            
+## [10] "Met aerobic physical activity guideline for substantial health benefits, adults"     
+## [11] "Consumed fruit less than one time daily among high school students"                  
+## [12] "Infants who were breastfed at 12 months"                                             
+## [13] "Infants who were exclusively breastfed through 6 months"                             
+## [14] "Obesity among WIC children aged 2 to 4 years"
 ```
 
 So now, we're ready to filter our data. Since "Asthma" and "Chronic Obstructive Pulmonary Disease" are definitely respiratory, we will include all rows that have those topics. For the topics that were up for investigation, we will only include rows that have questions regarding respiratory issues.
-```{r}
+
+``` r
 respiratory_diseases <- chronic_diseases %>%
   filter(
     Topic %in% c("Asthma", "Cancer", "Tobacco", "Nutrition, Physical Activity, and Weight Status") &
