@@ -223,7 +223,7 @@ As we looked further into our data set we decided to filter the chronic illness 
 
 
 ### Member Contributions
-Theo: Found chronic disease data set and examined how it relates to the air quality data set. Helped refine research question.
+Theo: Found chronic disease data set and examined how it relates to the air quality data set. Helped refine research question. Along with that, I cleaned the data to decide which rows should be kept and which rows are not considered respiratory. Filtered the data into a new table (respiratory_diseases), after cleaning the original data set.
 Rose: Helped define research question as well as come up with follow up questions and how to best graph them.     
 Joseph: Developed this file in coordination with team; examined data sources, created and refined research questions.
 
