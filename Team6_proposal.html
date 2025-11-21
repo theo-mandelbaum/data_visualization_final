@@ -1782,6 +1782,11 @@ disease data to only include respiratory diseases.</p>
 <span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="do">## [12] &quot;Infants who were breastfed at 12 months&quot;                                             </span></span>
 <span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="do">## [13] &quot;Infants who were exclusively breastfed through 6 months&quot;                             </span></span>
 <span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="do">## [14] &quot;Obesity among WIC children aged 2 to 4 years&quot;</span></span></code></pre></div>
+<p>So now, we’re ready to filter our data. Since “Asthma” and “Chronic
+Obstructive Pulmonary Disease” are definitely respiratory, we will
+include all rows that have those topics. For the topics that were up for
+investigation, we will only include rows that have questions regarding
+respiratory issues.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>respiratory_diseases <span class="ot">&lt;-</span> chronic_diseases <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    Topic <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Asthma&quot;</span>, <span class="st">&quot;Cancer&quot;</span>, <span class="st">&quot;Tobacco&quot;</span>, <span class="st">&quot;Nutrition, Physical Activity, and Weight Status&quot;</span>) <span class="sc">&amp;</span></span>
@@ -1804,6 +1809,22 @@ disease data to only include respiratory diseases.</p>
 <span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
 </div>
+<div id="proposal-expectations-evaluation" class="section level3">
+<h3>Proposal Expectations Evaluation</h3>
+<p>As we looked further into our data set we decided to filter the
+chronic illness data by specific illnesses. We chose to look at Asthma,
+respiratory illnesses, and lung, throat, and breast cancer. We chose
+these since they would be more likely to be affected by poor air
+quality. We also noticed that the data on chronic illnesses was sorted
+by state so we chose to define how urban a state is by population since
+we would not be able to compare counties that did and did not have major
+cities within them. We also felt the population of the state was a
+better measure than the number of major cities within the state because
+defining a major city would be based on population. We anticipated a
+positive correlation between the Air Quality Index (AQI) of a state and
+rates of illnesses. We also anticipated that higher populations of a
+state would have a positive correlation with AQI.</p>
+</div>
 <div id="anticipated-results" class="section level3">
 <h3>Anticipated Results</h3>
 <ul>
@@ -1816,16 +1837,6 @@ level of air quality</li>
 <li>Air Quality over time: Line plot with time on the x-axis and air
 quality on the y- axis</li>
 </ul>
-<p>Title As we looked further into our data set we decided to filter the
-chronic illness data by specific illnesses. We chose to look at Asthma,
-respiratory illnesses, and lung, throat, and breast cancer. We chose
-these since they would be more likely to be affected by poor air
-quality. We also noticed that the data on chronic illnesses was sorted
-by state so we chose to define how urban a state is by population since
-we would not be able to compare counties that did and did not have major
-cities within them. We also felt the population of the state was a
-better measure than the number of major cities within the state because
-defining a major city would be based on population.</p>
 </div>
 <div id="member-contributions" class="section level3">
 <h3>Member Contributions</h3>

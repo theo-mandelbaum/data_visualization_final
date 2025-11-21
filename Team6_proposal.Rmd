@@ -182,6 +182,7 @@ chronic_diseases %>%
   unique()
 ```
 
+So now, we're ready to filter our data. Since "Asthma" and "Chronic Obstructive Pulmonary Disease" are definitely respiratory, we will include all rows that have those topics. For the topics that were up for investigation, we will only include rows that have questions regarding respiratory issues.
 ```{r}
 respiratory_diseases <- chronic_diseases %>%
   filter(
