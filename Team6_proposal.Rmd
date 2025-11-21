@@ -48,7 +48,7 @@ We wanted to investigate the effects of pollution on chronic illnesses in the Un
 
 ### Project Research Question
 
-Does air quality have an effect on the risk of chronic respiratory illness?
+What is the strength of the relationship between state-level air pollution levels and chronic respiratory illness rates?
 
 #### Followup Questions
 
