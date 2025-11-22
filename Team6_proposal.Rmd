@@ -27,6 +27,7 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(here)
 library(dplyr)
+library(readxl)
 
 chronic_diseases <- read.csv(here("../U.S._Chronic_Disease_Indicators.csv"))
 air_quality_2015 <- read.csv(here("../annual_aqi_by_county_2015.csv"))
@@ -36,6 +37,11 @@ air_quality_2018 <- read.csv(here("../annual_aqi_by_county_2018.csv"))
 air_quality_2019 <- read.csv(here("../annual_aqi_by_county_2019.csv"))
 air_quality_2020 <- read.csv(here("../annual_aqi_by_county_2020.csv"))
 air_quality_2021 <- read.csv(here("../annual_aqi_by_county_2021.csv"))
+
+population_data <- read_excel(here("../co-est2020int-pop.xlsx"), skip=3)
+
+
+
 ```
 ![An air-polluted highway in India](https://www.usatoday.com/gcdn/-mm-/471aaf7f3239eea52e40fa1593f3f5fe323c72a4/c=0-266-3225-2088/local/-/media/2017/11/08/USATODAY/USATODAY/636457399868151922-AP-India-Air-Pollution.5.jpg)
 
@@ -43,19 +49,23 @@ air_quality_2021 <- read.csv(here("../annual_aqi_by_county_2021.csv"))
 
 ## Topics: Air quality, Pollution, Human Illness
 
-We wanted to investigate the effects of pollution on chronic illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses and cancers since they would most likely be most affected by air quality compared to other forms of chronic illnesses. 
+This project aims to investigate the relationship between pollution and chronic respiratory illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses and cancers, since they are most likely to be affected by air quality compared to other forms of chronic illnesses. 
 
 
 ### Project Research Question
 
 What is the strength of the relationship between state-level ozone pollution and AQI levels with chronic respiratory illness rates?
 
-#### Followup Questions
+#### Important Definitions
+- **Urban**: In close proximity to a city
+- **AQI**: Air Quality Index: A tool to report on air pollution levels, communicating potential health risks with a single number. The higher the AQI, the worse the air quality. 
+
+### Followup Questions
 
 - Does living closer to cities, in more urban areas, have an effect on the risk of chronic respiratory illness?
 - Does living in areas with higher populations, have an effect on the risk of chronic respiratory illness?
 - What are some of the most dangerous counties to live in based on rates of chronic respiratory illness?
-- How has air quality changed over time and how has it affected chronic illness rates?
+- How has air quality changed over time and how has this affected chronic illness rates?
 - Do the levels of ozone in the atmosphere correlate with rates of chronic respiratory illnesses? 
 
 
@@ -81,7 +91,7 @@ What is the strength of the relationship between state-level ozone pollution and
 
 ### About the dataset
 
-The link provided directs you to a webpage with a number of downloadable csv files. For our research, we are using the the Annual Summary Data, specifically the annual aqi data by county for the years from 2015-2021. So, we are using 7 different csv files, but they are all the same structure, with each file representing a different year. The air quality is measure by AQI (Air Quality Index), which is a tool to report on air pollution levels, communicating potential health risks with a single number. The higher the AQI, the worse the air quality is.
+The link provided directs you to a webpage with a number of downloadable csv files. For our research, we are using the the Annual Summary Data, specifically the annual AQI data by **county** for the years 2015-2021. So, we are using 7 different CSV files, but they are all the same structure, with each file representing a different year.
 
 #### Here are some snippets for the air quality metrics.
 
@@ -89,7 +99,14 @@ The link provided directs you to a webpage with a number of downloadable csv fil
 
 ![](./images/air_quality2.png)
 
-As you can see, each entry has a state, county, and year, allowing use to isolate big cities in the US. In terms of the data collection, we can see how many days deemed were healthy, unhealthy, unhealthy for sensitive groups, hazardous, etc. First, we will sort by state, as that's the data field that both of the data sets share in common. Once we've sorted the air quality data by states, we can compare the AQI measurements and the day totals, to other states.
+As you can see, each entry has a state, county, and year, allowing us to isolate big cities in the US. In terms of the data collection, we can see how many days deemed were healthy, unhealthy, unhealthy for sensitive groups, hazardous, etc. First, we will sort by state, as that's the data field that both of the data sets share in common. Once we've sorted the air quality data by states, we can compare the AQI measurements and the day totals, to other states.
+
+
+In addition, we are using generic population census data from [census.gov](https://www.census.gov/data/datasets/time-series/demo/popest/intercensal-2010-2020-counties.html) for measuring population.  This screenshot was produced after cleaning the code a few blocks below:
+
+![](./images/population_data_ss.png)
+
+
 
 Now that we've sorted our air quality data we can handle our chronic disease data. Similar to the air quality, we will sort the chronic diseases based on state; this field is called "LocationAbbr" in the chronic diseases data. In order to isolate respiratory illness, we'll sort this data by "Topic," specifying what type of disease the rows represents.
 
@@ -213,19 +230,104 @@ respiratory_diseases <- chronic_diseases %>%
 
 As we looked further into our data set we decided to filter the chronic illness data by specific illnesses. We chose to look at Asthma, respiratory illnesses, and lung, throat, and breast cancer. We chose these since they would be more likely to be affected by poor air quality. We also noticed that the data on chronic illnesses was sorted by state so we chose to define how urban a state is by population since we would not be able to compare counties that did and did not have major cities within them. We also felt the population of the state was a better measure than the number of major cities within the state because defining a major city would be based on population. We anticipated a positive correlation between the Air Quality Index (AQI) of a state and rates of illnesses. We also anticipated that higher populations of a state would have a positive correlation with AQI. We also decided to investigate the effects of ozone levels further since it is a more specific variable and is directly linked to the burning of fossil fuels by power plants and vehicles.
 
-### Anticipated Results
+### Graphed Results
 
-- Urban Citizen risk: Categorized bar chart by how urban an area is or how far from major cities
+```{r}
+  population_data_cleaned <- population_data %>%
+    select(1, 8:ncol(.)) %>%
+    setNames(c("Name", paste0(2015:2020)))
+
+
+```
+
 - Population size: Scatter plot with air quality on the y-axis and population on the x-axis
-- Most Dangerous Counties: Detailed map where color represents the level of air quality
-- Air Quality over time: Line plot with time on the x-axis and air quality on the y- axis
+
+```{r}
+  air_quality_all <- bind_rows(
+  air_quality_2015,
+  air_quality_2016,
+  air_quality_2017,
+  air_quality_2018,
+  air_quality_2019,
+  air_quality_2020
+)
+
+# Modify population data for easy joining with AQI 
+population_long <- population_data_cleaned %>%
+  filter(str_detect(Name, "County")) %>% # get just the counties, not the US one 
+  pivot_longer(
+    cols = starts_with("20"), # get just the years
+    names_to = "Year", 
+    values_to = "Population"
+  ) %>% 
+    mutate(Year = as.integer(Year)) %>% 
+    separate(Name, into = c("County", "State"), sep = ",\\s*") # split at the comma
+  
+  # Group Air Quality by State
+  aqi_state <- air_quality_all %>%
+  group_by(State, Year) %>%
+  summarise(AQI = mean(Max.AQI, na.rm = TRUE))
+
+  scatter_data <- population_long %>%
+  left_join(aqi_state, by = c("State", "Year")) %>% 
+    filter(!is.na(AQI) & !is.na(Population))
+  
+  
+  ggplot(scatter_data, aes(x = Population, y = AQI, color = factor(Year))) +
+  geom_point(alpha = 0.6) +
+  scale_x_continuous(labels = scales::comma) +
+  labs(
+    title = "County Population vs Average Max AQI (2015-2020)",
+    x = "County Population",
+    y = "Average Max AQI",
+    color = "Year"
+  ) 
+```
+Given this visualization, there is fair support to say that population and AQI are positively correlated.  In addition, we can see how especially in lowly populated areas, the year 2020 resulted in most people staying indoors, leading to less pollution of the air. 
+
+```{r}
+  state_lookup <- tibble(
+    State = state.name,
+    LocationAbbr = state.abb
+  )
+
+  aqi_state <- aqi_state %>%
+  left_join(state_lookup, by = c("State" = "State")) %>%
+  select(LocationAbbr, Year, AQI)
+  
+  #
+  respiratory_state <- respiratory_diseases %>%
+  filter(!is.na(DataValue)) %>%
+  group_by(LocationAbbr, Year = YearStart) %>%
+  summarise(
+    DiseaseRate = mean(DataValue, na.rm = TRUE),
+  )
+  
+  scatter_data_2 <- aqi_state %>%
+  left_join(respiratory_state, by = c("LocationAbbr", "Year")) %>%
+  filter(!is.na(DiseaseRate))
+  
+  
+  ggplot(scatter_data_2, aes(x = AQI, y = DiseaseRate, color = factor(Year))) +
+  geom_point(alpha = 0.7, size = 3) +
+  labs(
+    title = "Correlation of AQI with Respiratory Disease Rates",
+    x = "Average Max AQI",
+    y = "Respiratory Disease Rate",
+    color = "Year"
+  ) 
+```
+Here, we are looking strictly at AQI vs Respiratory disease rates over time.
+On average, as expected, lower AQI correlates to higher respiratory disease rates.
+
+In future iterations, this section will be updated to include an assessment of all variables, as in AQI, urbanity, and respiratory disease rates.
 
 
 
 ### Member Contributions
 Theo: Found chronic disease data set and examined how it relates to the air quality data set. Helped refine research question. Along with that, I cleaned the data to decide which rows should be kept and which rows are not considered respiratory. Filtered the data into a new table (respiratory_diseases), after cleaning the original data set.
-Rose: Helped define research question as well as come up with follow up questions and how to best graph them. I wrote the Proposal Expectations Evaluation disscussing what we worked on as a group. I also adjusted the research questions in response to feedback from the proposal as well as help to focus what parts of the datasets we wanted to use.    
-Joseph: Developed this file in coordination with team; examined data sources, created and refined research questions.
+Rose: Helped define research question as well as come up with follow up questions and how to best graph them. I wrote the Proposal Expectations Evaluation discussing what we worked on as a group. I also adjusted the research questions in response to feedback from the proposal as well as help to focus what parts of the datasets we wanted to use.    
+Joseph: PROPOSAL: Developed this file in coordination with team; examined data sources, created and refined research questions. PROGRESS REPORT: Set up population data integration with [readxl].  Cleaned that data and joined with previously created frames to make visualizations (both scatterplots). 
 
 
 
