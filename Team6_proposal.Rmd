@@ -29,16 +29,16 @@ library(here)
 library(dplyr)
 library(readxl)
 
-chronic_diseases <- read.csv(here("../U.S._Chronic_Disease_Indicators.csv"))
-air_quality_2015 <- read.csv(here("../annual_aqi_by_county_2015.csv"))
-air_quality_2016 <- read.csv(here("../annual_aqi_by_county_2016.csv"))
-air_quality_2017 <- read.csv(here("../annual_aqi_by_county_2017.csv"))
-air_quality_2018 <- read.csv(here("../annual_aqi_by_county_2018.csv"))
-air_quality_2019 <- read.csv(here("../annual_aqi_by_county_2019.csv"))
-air_quality_2020 <- read.csv(here("../annual_aqi_by_county_2020.csv"))
-air_quality_2021 <- read.csv(here("../annual_aqi_by_county_2021.csv"))
+chronic_diseases <- read.csv(here("data/U.S._Chronic_Disease_Indicators.csv"))
+air_quality_2015 <- read.csv(here("data/annual_aqi_by_county_2015.csv"))
+air_quality_2016 <- read.csv(here("data/annual_aqi_by_county_2016.csv"))
+air_quality_2017 <- read.csv(here("data/annual_aqi_by_county_2017.csv"))
+air_quality_2018 <- read.csv(here("data/annual_aqi_by_county_2018.csv"))
+air_quality_2019 <- read.csv(here("data/annual_aqi_by_county_2019.csv"))
+air_quality_2020 <- read.csv(here("data/annual_aqi_by_county_2020.csv"))
+air_quality_2021 <- read.csv(here("data/annual_aqi_by_county_2021.csv"))
 
-population_data <- read_excel(here("../co-est2020int-pop.xlsx"), skip=3)
+population_data <- read_excel(here("data/co-est2020int-pop.xlsx"), skip=3)
 
 
 
@@ -78,11 +78,11 @@ What is the strength of the relationship between state-level ozone pollution and
 
 #### Here is a snippet of our data, specifically the way that the values are measured.
 
-![](./images/chronic_disease_data_units.png)
+![](images/chronic_disease_data_units.png)
 
 #### Next is a snippet of the metrics the we plan to use to sort our data; i.e. the location where the data is recorded.
 
-![](./images/chronic_disease_data_location.png)
+![](images/chronic_disease_data_location.png)
 
 
 #### Data on National Air Quality Metrics
@@ -95,16 +95,16 @@ The link provided directs you to a webpage with a number of downloadable csv fil
 
 #### Here are some snippets for the air quality metrics.
 
-![](./images/air_quality1.png)
+![](images/air_quality1.png)
 
-![](./images/air_quality2.png)
+![](images/air_quality2.png)
 
 As you can see, each entry has a state, county, and year, allowing us to isolate big cities in the US. In terms of the data collection, we can see how many days deemed were healthy, unhealthy, unhealthy for sensitive groups, hazardous, etc. First, we will sort by state, as that's the data field that both of the data sets share in common. Once we've sorted the air quality data by states, we can compare the AQI measurements and the day totals, to other states.
 
 
 In addition, we are using generic population census data from [census.gov](https://www.census.gov/data/datasets/time-series/demo/popest/intercensal-2010-2020-counties.html) for measuring population.  This screenshot was produced after cleaning the code a few blocks below:
 
-![](./images/population_data_ss.png)
+![](images/population_data_ss.png)
 
 
 
