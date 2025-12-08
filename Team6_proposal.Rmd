@@ -49,7 +49,7 @@ population_data <- read_excel(here("data/co-est2020int-pop.xlsx"), skip=3)
 
 ## Topics: Air quality, Pollution, Human Illness
 
-This project aims to investigate the relationship between pollution and chronic respiratory illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses and cancers, since they are most likely to be affected by air quality compared to other forms of chronic illnesses. 
+This project aims to investigate the relationship between pollution and chronic respiratory illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses and cancers, since they are most likely to be affected by air quality compared to other forms of chronic illnesses. We chose to research this topic since pollution is a very prominent problem facing the United States
 
 
 ### Project Research Question
@@ -70,7 +70,7 @@ What is the strength of the relationship between state-level ozone pollution and
 
 
 
-### Data and Data Source
+## Data and Data Source
 
 #### Data on Chronic Disease Infection
 
@@ -226,11 +226,11 @@ respiratory_diseases <- chronic_diseases %>%
 
 
 
-### Proposal Expectations Evaluation 
+## Proposal Expectations Evaluation 
 
 As we looked further into our data set we decided to filter the chronic illness data by specific illnesses. We chose to look at Asthma, respiratory illnesses, and lung, throat, and breast cancer. We chose these since they would be more likely to be affected by poor air quality. We also noticed that the data on chronic illnesses was sorted by state so we chose to define how urban a state is by population since we would not be able to compare counties that did and did not have major cities within them. We also felt the population of the state was a better measure than the number of major cities within the state because defining a major city would be based on population. We anticipated a positive correlation between the Air Quality Index (AQI) of a state and rates of illnesses. We also anticipated that higher populations of a state would have a positive correlation with AQI. We also decided to investigate the effects of ozone levels further since it is a more specific variable and is directly linked to the burning of fossil fuels by power plants and vehicles.
 
-### Graphed Results
+## Graphed Results
 
 ```{r}
   population_data_cleaned <- population_data %>%
@@ -285,6 +285,7 @@ population_long <- population_data_cleaned %>%
 ```
 Given this visualization, there is fair support to say that population and AQI are positively correlated.  In addition, we can see how especially in lowly populated areas, the year 2020 resulted in most people staying indoors, leading to less pollution of the air. 
 
+
 ```{r}
   state_lookup <- tibble(
     State = state.name,
@@ -321,6 +322,23 @@ Here, we are looking strictly at AQI vs Respiratory disease rates over time.
 On average, as expected, lower AQI correlates to higher respiratory disease rates.
 
 In future iterations, this section will be updated to include an assessment of all variables, as in AQI, urbanity, and respiratory disease rates.
+
+
+## Conclusion
+
+#Summarize your central narrative here. Present the key findings from each follow up question and explain how they collectively address the main research question. Finally, provide a clear and concise conclusion that directly responds to the main research question
+After completing our research our initial hypothesis was supported. We found that having a greater population in an area would correlate with higher levels of air pollution and worse air quality which in turn correlates with higher levels of chronic illnesses relating to respiratory issues. 
+
+
+
+## Data Dictionary
+- AQI- Air Quality Index- The higher the AQI value, the greater the level of air pollution and the greater the health concern, an AQI value of 50 or below represents good air quality, while an AQI value over 300 represents hazardous air quality.
+  + Average Max AQI- An average of the daily maximum AQI's for each year.
+- Chronic respiratory diseases- Diseases record in the data set that relate to respiratory health, specifically Asthma and Chronic Obstructive Pulmonary Disease.
+- Disease Rate- The average number of people with the illness per 100,000 people. 
+- Population- The number of people in a certain area. 
+
+
 
 
 

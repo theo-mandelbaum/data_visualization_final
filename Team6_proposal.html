@@ -1321,8 +1321,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -1333,7 +1334,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -1594,7 +1595,8 @@ and chronic respiratory illnesses in the United States. We chose to
 focus on air quality rates to measure air pollution. We also chose to
 focus on respiratory illnesses and cancers, since they are most likely
 to be affected by air quality compared to other forms of chronic
-illnesses.</p>
+illnesses. We chose to research this topic since pollution is a very
+prominent problem facing the United States</p>
 <div id="project-research-question" class="section level3">
 <h3>Project Research Question</h3>
 <p>What is the strength of the relationship between state-level ozone
@@ -1624,8 +1626,9 @@ chronic illness rates?</li>
 chronic respiratory illnesses?</li>
 </ul>
 </div>
-<div id="data-and-data-source" class="section level3">
-<h3>Data and Data Source</h3>
+</div>
+<div id="data-and-data-source" class="section level2">
+<h2>Data and Data Source</h2>
 <div id="data-on-chronic-disease-infection" class="section level4">
 <h4>Data on Chronic Disease Infection</h4>
 <p><a href="https://catalog.data.gov/dataset/u-s-chronic-disease-indicators">Link
@@ -1645,7 +1648,6 @@ data; i.e. the location where the data is recorded.</h4>
 <h4>Data on National Air Quality Metrics</h4>
 <p><a href="https://aqs.epa.gov/aqsweb/airdata/download_files.html">Link
 to Dataset</a></p>
-</div>
 </div>
 <div id="about-the-dataset" class="section level3">
 <h3>About the dataset</h3>
@@ -1822,8 +1824,9 @@ respiratory issues.</p>
 <span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
 </div>
-<div id="proposal-expectations-evaluation" class="section level3">
-<h3>Proposal Expectations Evaluation</h3>
+</div>
+<div id="proposal-expectations-evaluation" class="section level2">
+<h2>Proposal Expectations Evaluation</h2>
 <p>As we looked further into our data set we decided to filter the
 chronic illness data by specific illnesses. We chose to look at Asthma,
 respiratory illnesses, and lung, throat, and breast cancer. We chose
@@ -1841,8 +1844,8 @@ investigate the effects of ozone levels further since it is a more
 specific variable and is directly linked to the burning of fossil fuels
 by power plants and vehicles.</p>
 </div>
-<div id="graphed-results" class="section level3">
-<h3>Graphed Results</h3>
+<div id="graphed-results" class="section level2">
+<h2>Graphed Results</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>  population_data_cleaned <span class="ot">&lt;-</span> population_data <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    <span class="fu">select</span>(<span class="dv">1</span>, <span class="dv">8</span><span class="sc">:</span><span class="fu">ncol</span>(.)) <span class="sc">%&gt;%</span></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">&quot;Name&quot;</span>, <span class="fu">paste0</span>(<span class="dv">2015</span><span class="sc">:</span><span class="dv">2020</span>)))</span></code></pre></div>
@@ -1931,6 +1934,31 @@ respiratory disease rates.</p>
 <p>In future iterations, this section will be updated to include an
 assessment of all variables, as in AQI, urbanity, and respiratory
 disease rates.</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>#Summarize your central narrative here. Present the key findings from
+each follow up question and explain how they collectively address the
+main research question. Finally, provide a clear and concise conclusion
+that directly responds to the main research question</p>
+<div id="data-dictionary" class="section level3">
+<h3>Data Dictionary</h3>
+<ul>
+<li>AQI- Air Quality Index- The higher the AQI value, the greater the
+level of air pollution and the greater the health concern, an AQI value
+of 50 or below represents good air quality, while an AQI value over 300
+represents hazardous air quality.
+<ul>
+<li>Average Max AQI- An average of the daily maximum AQI’s for each
+year.</li>
+</ul></li>
+<li>Chronic respiratory diseases- Diseases record in the data set that
+relate to respiratory health, specifically Asthma and Chronic
+Obstructive Pulmonary Disease.</li>
+<li>Disease Rate- The average number of people with the illness per
+100,000 people.</li>
+<li>Population- The number of people in a certain area.</li>
+</ul>
 </div>
 <div id="member-contributions" class="section level3">
 <h3>Member Contributions</h3>
