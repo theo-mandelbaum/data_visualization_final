@@ -28,6 +28,7 @@ library(tidyverse)
 library(here)
 library(dplyr)
 library(readxl)
+library(viridis)
 
 chronic_diseases <- read.csv(here("data/U.S._Chronic_Disease_Indicators.csv"))
 air_quality_2015 <- read.csv(here("data/annual_aqi_by_county_2015.csv"))
@@ -49,7 +50,7 @@ population_data <- read_excel(here("data/co-est2020int-pop.xlsx"), skip=3)
 
 ## Topics: Air quality, Pollution, Human Illness
 
-This project aims to investigate the relationship between pollution and chronic respiratory illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses and cancers, since they are most likely to be affected by air quality compared to other forms of chronic illnesses. We chose to research this topic since pollution is a very prominent problem facing the United States
+This project aims to investigate the relationship between pollution and chronic illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses and cancers, since they are most likely to be affected by air quality compared to other forms of chronic illnesses. We chose to research this topic since pollution is a very prominent problem that the United States is facing, manifesting in ways like increasing temperatures and deadly ailments.
 
 
 ## Project Research Question
@@ -62,7 +63,7 @@ What is the strength of the relationship between state-level ozone pollution and
 
 ## Followup Questions
 
-- Does living closer to cities, in more urban areas, have an effect on the risk of chronic respiratory illness?
+- Does living closer to cities have an effect on the risk of chronic respiratory illness?
 - Does living in areas with higher populations, have an effect on the risk of chronic respiratory illness?
 - What are some of the most dangerous counties to live in based on rates of chronic respiratory illness?
 - How has air quality changed over time and how has this affected chronic illness rates?
@@ -85,7 +86,7 @@ What is the strength of the relationship between state-level ozone pollution and
 
 ### Chronic Disease Data Validity
 
-The data is collected by CDC’s Division of Population Health but then processed and standardized by CDC before publication. The result is a compiled data set that covers the state and national level chronic disease indicators, suitable for public use. If you take a look at the data, you'll see that many of the fields are scattered with blank values. For this reason, we sort our data based on the values that do exist. Thus, avoiding the occasional blank value.
+The data is collected by Centers for Disease Control and Prevention’s Division of Population Health but then processed and standardized by CDC before publication. The result is a compiled data set that covers the state and national level chronic disease indicators, suitable for public use. If you take a look at the data, you'll see that many of the fields are scattered with blank values. For this reason, we sort our data based on the values that do exist. Thus, avoiding the occasional blank value.
 
 This CDC data set was developed using a cross-cutting set of 115 indicators developed by consensus among the CDC, the Council of State and Territorial Epidemiologists, and the national Association of Chronic Disease Directors. Given that the data was collected and developed under the supervision of multiple professional organizations, the probability of notable bias is likely low. Overall, this data set is highly reliable in terms of minimizing bias, although some potential for bias in the original data collection still exists, even with large sample sizes.
 
