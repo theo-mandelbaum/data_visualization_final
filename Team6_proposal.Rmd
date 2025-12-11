@@ -69,7 +69,6 @@ What is the strength of the relationship between state-level ozone pollution and
 - Do the levels of ozone in the atmosphere correlate with rates of chronic respiratory illnesses? 
 
 
-
 ## Data and Data Source
 
 #### Data on Chronic Disease Infection
@@ -84,12 +83,17 @@ What is the strength of the relationship between state-level ozone pollution and
 
 ![](images/chronic_disease_data_location.png)
 
+### Chronic Disease Data Validity
+
+The data are collected by CDC’s Division of Population Health but then processed and standardized by CDC before publication. The result is a compiled data set that covers the state and national level chronic disease indicators, suitable for public use. If you take a look at the data, you'll see that many of the fields are scattered with blank values. For this reason, we sort our data based on the values that do exist. Thus, avoiding the occasional blank value.
+
+This CDC dataset was developed using a cross-cutting set of 115 indicators developed by consensus among the CDC, the Council of State and Territorial Epidemiologists, and the national Association of Chronic Disease Directors. Given that the data was collected and developed under the supervision of multiple professional organizations, the probability of notable bias is likely low. Overall, this data set is highly reliable in terms of minimizing bias, although some potential for bias in the original data collection still exists, even with large sample sizes.
 
 #### Data on National Air Quality Metrics
 
 [Link to Dataset](https://aqs.epa.gov/aqsweb/airdata/download_files.html)
 
-### About the dataset
+### About the data
 
 The link provided directs you to a webpage with a number of downloadable csv files. For our research, we are using the the Annual Summary Data, specifically the annual AQI data by **county** for the years 2015-2021. So, we are using 7 different CSV files, but they are all the same structure, with each file representing a different year.
 
@@ -101,10 +105,15 @@ The link provided directs you to a webpage with a number of downloadable csv fil
 
 As you can see, each entry has a state, county, and year, allowing us to isolate big cities in the US. In terms of the data collection, we can see how many days deemed were healthy, unhealthy, unhealthy for sensitive groups, hazardous, etc. First, we will sort by state, as that's the data field that both of the data sets share in common. Once we've sorted the air quality data by states, we can compare the AQI measurements and the day totals, to other states.
 
+### Air Quality Data Validity
 
-In addition, we are using generic population census data from [census.gov](https://www.census.gov/data/datasets/time-series/demo/popest/intercensal-2010-2020-counties.html) for measuring population.  This screenshot was produced after cleaning the code a few blocks below:
+
+
+
+In addition, we are using generic population census data from [census.gov](https://www.census.gov/data/datasets/time-series/demo/popest/intercensal-2010-2020-counties.html) for measuring population in each . This screenshot was produced after cleaning the code a few blocks below:
 
 ![](images/population_data_ss.png)
+
 
 
 
@@ -112,23 +121,23 @@ Now that we've sorted our air quality data we can handle our chronic disease dat
 
 Once we've sorted both data sets as described above, we can answer the question; How strongly does air quality / pollution contribute to risk of chronic respiratory illness?
 
-#### Given these datasets, we need to filter the chronic diseases data to figure out which diseases can be labelled as respiratory
+### Given these datasets, we need to filter the chronic diseases data to figure out which diseases can be labelled as respiratory
 
-First, we'll look at all of the possible options for the Topic columns:
+#### First, we'll look at all of the possible options for the Topic columns:
 
 ```{r}
 unique_topics <- unique(chronic_diseases$Topic)
 print(unique_topics)
 ```
-Based on the given topics, here's a list of which topics can be categorized as respiratory:
+#### Based on the given topics, here's a list of which topics can be categorized as respiratory:
 
-Definitely respiratory:
+#####Definitely respiratory:
 
 - "Asthma"
 
 - "Chronic Obstructive Pulmonary Disease"
 
-Could be / need more investigation:
+##### Could be / need more investigation:
 
 - "Cancer"
 
@@ -138,7 +147,7 @@ Could be / need more investigation:
 
 - "Nutrition, Physical Activity, and Weight Status"
 
-Definitely not respiratory:
+##### Definitely not respiratory:
 
 - "Mental Health"
 
@@ -200,7 +209,9 @@ chronic_diseases %>%
   unique()
 ```
 
-So now, we're ready to filter our data. Since "Asthma" and "Chronic Obstructive Pulmonary Disease" are definitely respiratory, we will include all rows that have those topics. For the topics that were up for investigation, we will only include rows that have questions regarding respiratory issues.
+##### Now, we're ready to filter our data.
+
+Since "Asthma" and "Chronic Obstructive Pulmonary Disease" are definitely respiratory, we will include all rows that have those topics. For the topics that were up for investigation, we will only include rows that have questions regarding respiratory issues.
 ```{r}
 respiratory_diseases <- chronic_diseases %>%
   filter(
