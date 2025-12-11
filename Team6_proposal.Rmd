@@ -52,7 +52,7 @@ population_data <- read_excel(here("data/co-est2020int-pop.xlsx"), skip=3)
 This project aims to investigate the relationship between pollution and chronic respiratory illnesses in the United States. We chose to focus on air quality rates to measure air pollution. We also chose to focus on respiratory illnesses and cancers, since they are most likely to be affected by air quality compared to other forms of chronic illnesses. We chose to research this topic since pollution is a very prominent problem facing the United States
 
 
-### Project Research Question
+## Project Research Question
 
 What is the strength of the relationship between state-level ozone pollution and AQI levels with chronic respiratory illness rates?
 
@@ -60,7 +60,7 @@ What is the strength of the relationship between state-level ozone pollution and
 - **Urban**: In close proximity to a city
 - **AQI**: Air Quality Index: A tool to report on air pollution levels, communicating potential health risks with a single number. The higher the AQI, the worse the air quality. 
 
-### Followup Questions
+## Followup Questions
 
 - Does living closer to cities, in more urban areas, have an effect on the risk of chronic respiratory illness?
 - Does living in areas with higher populations, have an effect on the risk of chronic respiratory illness?
@@ -71,7 +71,7 @@ What is the strength of the relationship between state-level ozone pollution and
 
 ## Data and Data Source
 
-#### Data on Chronic Disease Infection
+### Data on Chronic Disease Infection
 
 [Link to Dataset](https://catalog.data.gov/dataset/u-s-chronic-disease-indicators)
 
@@ -85,15 +85,15 @@ What is the strength of the relationship between state-level ozone pollution and
 
 ### Chronic Disease Data Validity
 
-The data are collected by CDC’s Division of Population Health but then processed and standardized by CDC before publication. The result is a compiled data set that covers the state and national level chronic disease indicators, suitable for public use. If you take a look at the data, you'll see that many of the fields are scattered with blank values. For this reason, we sort our data based on the values that do exist. Thus, avoiding the occasional blank value.
+The data is collected by CDC’s Division of Population Health but then processed and standardized by CDC before publication. The result is a compiled data set that covers the state and national level chronic disease indicators, suitable for public use. If you take a look at the data, you'll see that many of the fields are scattered with blank values. For this reason, we sort our data based on the values that do exist. Thus, avoiding the occasional blank value.
 
-This CDC dataset was developed using a cross-cutting set of 115 indicators developed by consensus among the CDC, the Council of State and Territorial Epidemiologists, and the national Association of Chronic Disease Directors. Given that the data was collected and developed under the supervision of multiple professional organizations, the probability of notable bias is likely low. Overall, this data set is highly reliable in terms of minimizing bias, although some potential for bias in the original data collection still exists, even with large sample sizes.
+This CDC data set was developed using a cross-cutting set of 115 indicators developed by consensus among the CDC, the Council of State and Territorial Epidemiologists, and the national Association of Chronic Disease Directors. Given that the data was collected and developed under the supervision of multiple professional organizations, the probability of notable bias is likely low. Overall, this data set is highly reliable in terms of minimizing bias, although some potential for bias in the original data collection still exists, even with large sample sizes.
 
-#### Data on National Air Quality Metrics
+### Data on National Air Quality Metrics
 
 [Link to Dataset](https://aqs.epa.gov/aqsweb/airdata/download_files.html)
 
-### About the data
+#### About the data
 
 The link provided directs you to a webpage with a number of downloadable csv files. For our research, we are using the the Annual Summary Data, specifically the annual AQI data by **county** for the years 2015-2021. So, we are using 7 different CSV files, but they are all the same structure, with each file representing a different year.
 
@@ -107,15 +107,23 @@ As you can see, each entry has a state, county, and year, allowing us to isolate
 
 ### Air Quality Data Validity
 
+The air quality data that we're using comes from the Environmental Protection Agency's (EPA) Air Quality System (AQS). EPA receives their their data from data collection agencies and incorporates standardized methods, consistent pollutant definitions, and established regulatory criteria. After the data is reported to EPA, EPA calculates several types of federally aggregated data, including the annual air quality data set that we are analyzing. The data that they receive has already been preprocessed, meaning that the data has already been cleaned with. Part of this preprocessing  remove any missing values, and fill empty pollution scores with the value 0.
 
+Although the EPA’s AQS dataset follows standardized monitoring protocols and federally defined procedures, there is still some potential for bias in the underlying measurements. There. is room for some variation between local monitoring practices, differences in equipment, and sampling, among the various data collection agencies. Additionally, outliers in pollution data could be produced based on unexpected events, such as wildfires or dust storms. Overall, the EPA's preprocessing steps work to solve many of the possible bias factors, but bias is still possible.
 
+## Population Data
 
-In addition, we are using generic population census data from [census.gov](https://www.census.gov/data/datasets/time-series/demo/popest/intercensal-2010-2020-counties.html) for measuring population in each . This screenshot was produced after cleaning the code a few blocks below:
+In addition, we are using generic, United States population census data from [census.gov](https://www.census.gov/data/datasets/time-series/demo/popest/intercensal-2010-2020-counties.html) for measuring population in each county. This screenshot was produced after cleaning the code a few blocks below:
 
 ![](images/population_data_ss.png)
 
+### Population Data Validity
 
+The population data we are using comes from the U.S. Census Bureau’s County Intercensal Estimates for the years 2010–2020. These figures are produced by combining two different data sources: the official decennial census counts and the annual postcensal estimates for each county. The Census Bureau resolves differences between these sources using a standardized methodology, which guarantees that the population totals are consistent across all ten years. Since the intercensal files are generated directly by the Census Bureau and follow well-defined statistical procedures, the dataset is considered highly reliable for analyzing population trends in the United States.
 
+Although the Census Bureau rigorously tries to standardize this data, there is still some room for bias in the population estimates. Some counties may be undercounted or overcounted, despite the verification of birth records, death records, and migration data. This kind of population data can vary from county to county, regardless of the efforts to minimize these inaccuracies. As a result of the nature of population data, there is room for small inaccuracies; however, these inaccuracies should not significantly impact the data analysis that we plan to perform.
+
+#### Next Steps
 
 Now that we've sorted our air quality data we can handle our chronic disease data. Similar to the air quality, we will sort the chronic diseases based on state; this field is called "LocationAbbr" in the chronic diseases data. In order to isolate respiratory illness, we'll sort this data by "Topic," specifying what type of disease the rows represents.
 
