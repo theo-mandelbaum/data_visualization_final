@@ -254,6 +254,7 @@ As we looked further into our data set we decided to filter the chronic illness 
 
 ```{r}
   population_data_cleaned <- population_data %>%
+    filter(.[[1]] != "United States") %>% 
     select(1, 8:ncol(.)) %>%
     setNames(c("Name", paste0(2015:2020)))
 
@@ -274,7 +275,6 @@ As we looked further into our data set we decided to filter the chronic illness 
 
 # Modify population data for easy joining with AQI 
 population_long <- population_data_cleaned %>%
-  filter(str_detect(Name, "County")) %>% # get just the counties, not the US one 
   pivot_longer(
     cols = starts_with("20"), # get just the years
     names_to = "Year", 
