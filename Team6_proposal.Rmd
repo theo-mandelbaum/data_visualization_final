@@ -80,7 +80,7 @@ What is the strength of the relationship between state-level ozone pollution and
 
 ![](images/chronic_disease_data_units.png)
 
-#### Next is a snippet of the metrics the we plan to use to sort our data; i.e. the location where the data is recorded.
+#### Next is a snippet of the metrics the we plan to use to sort our data; i.e. the location where the data is recorded. We plan to use the **LocationDesc** field to organize the chronic diseases data, as this field's structure matches up with the State field of our other data set.
 
 ![](images/chronic_disease_data_location.png)
 
@@ -104,7 +104,7 @@ The link provided directs you to a webpage with a number of downloadable csv fil
 
 ![](images/air_quality2.png)
 
-As you can see, each entry has a state, county, and year, allowing us to isolate big cities in the US. In terms of the data collection, we can see how many days deemed were healthy, unhealthy, unhealthy for sensitive groups, hazardous, etc. First, we will sort by state, as that's the data field that both of the data sets share in common. Once we've sorted the air quality data by states, we can compare the AQI measurements and the day totals, to other states.
+As you can see, each entry has a state, county, and year, allowing us to isolate big cities in the US. In terms of the data collection, we can see how many days were deemed healthy, unhealthy, unhealthy for sensitive groups, hazardous, etc. First, we will sort by state, as that's the data field that both of the data sets share in common. Once we've sorted the air quality data by states, we can compare the AQI measurements and the day totals, to other states.
 
 ### Air Quality Data Validity
 
@@ -112,7 +112,7 @@ The air quality data that we're using comes from the Environmental Protection Ag
 
 Although the EPA’s AQS dataset follows standardized monitoring protocols and federally defined procedures, there is still some potential for bias in the underlying measurements. There. is room for some variation between local monitoring practices, differences in equipment, and sampling, among the various data collection agencies. Additionally, outliers in pollution data could be produced based on unexpected events, such as wildfires or dust storms. Overall, the EPA's preprocessing steps work to solve many of the possible bias factors, but bias is still possible.
 
-## Population Data
+### Population Data
 
 In addition, we are using generic, United States population census data from [census.gov](https://www.census.gov/data/datasets/time-series/demo/popest/intercensal-2010-2020-counties.html) for measuring population in each county. This screenshot was produced after cleaning the code a few blocks below:
 
