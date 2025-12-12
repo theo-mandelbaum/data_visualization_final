@@ -39,6 +39,7 @@ air_quality_2018 <- read.csv(here("data/annual_aqi_by_county_2018.csv"))
 air_quality_2019 <- read.csv(here("data/annual_aqi_by_county_2019.csv"))
 air_quality_2020 <- read.csv(here("data/annual_aqi_by_county_2020.csv"))
 air_quality_2021 <- read.csv(here("data/annual_aqi_by_county_2021.csv"))
+air_quality_2022 <- read.csv(here("data/annual_aqi_by_county_2021.csv"))
 
 population_data <- read_excel(here("data/co-est2020int-pop.xlsx"), skip=3)
 
@@ -299,16 +300,17 @@ population_long <- population_data_cleaned %>%
     filter(!is.na(AQI) & !is.na(Population))
   
   
-ggplot(scatter_data, aes(x = Population, y = AQI)) +
-  stat_density_2d(aes(fill = ..density..), geom = "raster", contour = FALSE) +
-  scale_fill_viridis_c() +
-  scale_x_continuous(labels = scales::comma, limits = c(0, 6000000)) +
-  scale_y_continuous(limits = c(0, 450)) +
+ggplot(scatter_data, aes(x = Population, y = AQI, color = AQI)) +
+  geom_point(alpha = 0.7, size = 2) +
+  scale_x_continuous(labels = scales::comma) +
+  scale_y_continuous(
+    limits = c(0, 450),  # clip y-axis to a reasonable max
+  ) +
   labs(
     title = "County Population vs Average Max AQI",
     x = "County Population",
     y = "Average Max AQI",
-    fill = "Density"
+    color = "AQI"
   ) +
   theme_minimal(base_size = 14)
 
@@ -316,7 +318,71 @@ ggplot(scatter_data, aes(x = Population, y = AQI)) +
 Given this visualization, there is fair support to say that population and AQI are positively correlated.  In addition, we can see how especially in lowly populated areas, the year 2020 resulted in most people staying indoors, leading to less pollution of the air. 
 
 
+```{r}
+# Combine all air quality datasets into one long table
+aqi_long <- bind_rows(
+  air_quality_2015 %>% mutate(Year = 2015),
+  air_quality_2016 %>% mutate(Year = 2016),
+  air_quality_2017 %>% mutate(Year = 2017),
+  air_quality_2018 %>% mutate(Year = 2018),
+  air_quality_2019 %>% mutate(Year = 2019),
+  air_quality_2020 %>% mutate(Year = 2020),
+  air_quality_2018 %>% mutate(Year = 2021),
+  air_quality_2018 %>% mutate(Year = 2022)
+)
 
+# Average AQI per year
+aqi_yearly <- aqi_long %>%
+  group_by(Year) %>%
+  summarise(Avg_AQI = mean(Max.AQI, na.rm = TRUE))
+
+
+ggplot(aqi_yearly, aes(x = Year, y = Avg_AQI)) +
+  geom_line(size = 1.2, color = "steelblue") +
+  geom_point(size = 3, color = "steelblue") +
+  scale_x_continuous(breaks = 2015:2021) +
+  labs(
+    title = "Average Maximum AQI by Year",
+    x = "Year",
+    y = "Average Max AQI"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+```{r}
+# Build a dataset of illness rates by year and illness type
+illness_long <- respiratory_diseases %>%
+  filter(!is.na(DataValue)) %>%
+  mutate(
+    Illness = case_when(
+      Topic == "Asthma" ~ "Asthma",
+      Topic == "Chronic Obstructive Pulmonary Disease" ~ "COPD",
+      Topic == "Cancer" ~ "Lung Cancer",
+      Topic == "Tobacco" ~ "Smoking-Related",
+      Topic == "Nutrition, Physical Activity, and Weight Status" ~ "Activity (Respiratory-Linked)",
+      TRUE ~ Topic
+    ),
+    # Use YearStart when available, otherwise YearEnd
+    Year = if_else(!is.na(YearStart), YearStart, YearEnd)
+  ) %>%
+  group_by(Year, Illness) %>%
+  summarise(Rate = mean(DataValue, na.rm = TRUE), .groups = "drop")
+
+
+# Plot
+ggplot(illness_long, aes(x = Year, y = Rate, color = Illness)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = sort(unique(illness_long$Year))) +
+  labs(
+    title = "Respiratory Illness Rates Over Time",
+    x = "Year",
+    y = "Rate per 100,000",
+    color = "Illness Type"
+  ) +
+  theme_minimal(base_size = 14)
+
+```
 
 
 ```{r}
