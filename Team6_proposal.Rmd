@@ -253,10 +253,15 @@ As we looked further into our data set we decided to filter the chronic illness 
 ## Graphed Results
 
 ```{r}
-  population_data_cleaned <- population_data %>%
-    filter(.[[1]] != "United States") %>% 
-    select(1, 8:ncol(.)) %>%
-    setNames(c("Name", paste0(2015:2020)))
+ population_data_cleaned <- population_data %>%
+  filter(.[[1]] != "United States") %>% 
+  select(1, 8:ncol(.)) %>%
+  setNames(c("Name", paste0(2015:2020))) %>%
+  mutate(
+    County = Name %>%
+      sub("^\\.", "", .) %>%            # remove leading dot
+      sub("\\s*County,.*$", "", .)      # remove ' County, ...'
+  )
 
 
 ```
@@ -280,16 +285,16 @@ population_long <- population_data_cleaned %>%
     names_to = "Year", 
     values_to = "Population"
   ) %>% 
-    mutate(Year = as.integer(Year)) %>% 
-    separate(Name, into = c("County", "State"), sep = ",\\s*") # split at the comma
+    mutate(Year = as.integer(Year)) 
+  
   
   # Group Air Quality by State
-  aqi_state <- air_quality_all %>%
-  group_by(State, Year) %>%
+  aqi_county <- air_quality_all %>%
+  group_by(County, Year) %>%
   summarise(AQI = mean(Max.AQI, na.rm = TRUE))
 
   scatter_data <- population_long %>%
-  left_join(aqi_state, by = c("State", "Year")) %>% 
+  left_join(aqi_county, by = c("County", "Year")) %>% 
     filter(!is.na(AQI) & !is.na(Population))
   
   
