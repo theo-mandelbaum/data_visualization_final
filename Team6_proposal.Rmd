@@ -426,8 +426,7 @@ In future iterations, this section will be updated to include an assessment of a
 ## Conclusion
 
 #Summarize your central narrative here. Present the key findings from each follow up question and explain how they collectively address the main research question. Finally, provide a clear and concise conclusion that directly responds to the main research question
-After completing our research our initial hypothesis was supported. We found that having a greater population in an area would correlate with higher levels of air pollution and worse air quality which in turn correlates with higher levels of chronic illnesses relating to respiratory issues. 
-
+After completing our research our group found that the correlation between air quality and respiratory illnesses was not very strong. But when looking at specific pollutants such as ozone which primarily comes from vehicles the correlation was much stronger. Higher ozone levels had a strong positive correlation with higher rates of respiratory illnesses. There is also no strong correlation between the AQI and time. It had several sharp changes over the the years. On the contrary the rates of most respiratory illnesses has decreased within the past few years. Asthma rates increased between 2021 and 2022. 
 
 
 ## Data Dictionary
