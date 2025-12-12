@@ -322,13 +322,11 @@ ggplot(scatter_data, aes(x = Population, y = AQI, color = AQI)) +
 ```
 Given this visualization, there is fair support to say that population and AQI are positively correlated.  In addition, we can see how especially in lowly populated areas, the year 2020 resulted in most people staying indoors, leading to less pollution of the air. 
 
+##### Let's take a look at the change in AQI by year and compare it to the change in respiratory illnesses over time:
 
 ```{r warning=FALSE}
 # Combine all air quality datasets into one long table
 aqi_long <- bind_rows(
-  air_quality_2015 %>% mutate(Year = 2015),
-  air_quality_2016 %>% mutate(Year = 2016),
-  air_quality_2017 %>% mutate(Year = 2017),
   air_quality_2018 %>% mutate(Year = 2018),
   air_quality_2019 %>% mutate(Year = 2019),
   air_quality_2020 %>% mutate(Year = 2020),
@@ -353,6 +351,8 @@ ggplot(aqi_yearly, aes(x = Year, y = Avg_AQI)) +
   ) +
   theme_minimal(base_size = 14)
 ```
+Here, you can see that the AQI rates begin around 125 in 2018, followed by a plummet in 2019. Next the AQI levels increase to a maximum in 2020, and level back out in 2021 and 2022.
+
 
 ```{r warning=FALSE}
 # Build a dataset of illness rates by year and illness type
@@ -374,76 +374,117 @@ illness_long <- respiratory_diseases %>%
   summarise(Rate = mean(DataValue, na.rm = TRUE), .groups = "drop")
 
 
+# Filter to consistent reporting years (2018–2022)
+illness_18_22 <- illness_long %>%
+  filter(Year >= 2018, Year <= 2022)
+
 # Plot
+ggplot(illness_18_22, aes(x = Year, y = Rate, color = Illness)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  scale_x_continuous(breaks = 2018:2022) +
+  labs(
+    title = "Respiratory Illness Rates Over Time (2018–2022)",
+    x = "Year",
+    y = "Rate per 100,000",
+    color = "Illness Type"
+  ) +
+  theme_minimal(base_size = 14) + 
+  theme_minimal(base_size = 14)
+```
+Comparing the AQI rates to the illness rates, we can see that asthma rates decreased between 2021 and 2022, while smoking-related illnesses after the AQI averages out. There is no clear trend in the average max AQI over the years since it has several sharp changes over the years.
+
+
+##### Now that we've compared the by year metrics, let's craete a chart that compares Ozone pollution with disease rates.
+
+```{r}
+# Build a dataset of illness rates by year and illness type (2018–2022)
+illness_long <- respiratory_diseases %>%
+  filter(YearStart >= 2018 & YearStart <= 2022, !is.na(DataValue)) %>%
+  mutate(
+    Illness = case_when(
+      Topic == "Asthma" ~ "Asthma",
+      Topic == "Chronic Obstructive Pulmonary Disease" ~ "COPD",
+      Topic == "Cancer" ~ "Lung Cancer",
+      Topic == "Tobacco" ~ "Smoking-Related",
+      Topic == "Nutrition, Physical Activity, and Weight Status" ~ "Activity (Respiratory-Linked)",
+      TRUE ~ Topic
+    ),
+    Year = YearStart
+  ) %>%
+  group_by(Year, Illness) %>%
+  summarise(Rate = mean(DataValue, na.rm = TRUE), .groups = "drop")
+
+# Plot: 4-dot line chart with bigger points
 ggplot(illness_long, aes(x = Year, y = Rate, color = Illness)) +
   geom_line(size = 1.2) +
-  geom_point(size = 2) +
-  scale_x_continuous(breaks = sort(unique(illness_long$Year))) +
+  geom_point(size = 5) +  # bigger points
+  scale_x_continuous(breaks = 2018:2022) +
   labs(
-    title = "Respiratory Illness Rates Over Time",
+    title = "Respiratory Illness Rates Over Time (2018–2022)",
     x = "Year",
     y = "Rate per 100,000",
     color = "Illness Type"
   ) +
   theme_minimal(base_size = 14)
-
 ```
+
+As the average Ozone level increases, the average illness rate increases greatly. This chart depicts a strongly positive correlation between the two metrics, indicating that a higher Ozone layer pollution level will most likely result in higher respiratory illness rates.
+
+
+##### Finally, let's wrap up with a chart that shows the disease data across the United States
+
 ```{r}
+us_states <- read_sf(here("data/ne_110m_admin_1_states_provinces.shp"))
 
-  
-
-  us_states <- read_sf(here("data/ne_110m_admin_1_states_provinces.shp"))
-
-  us_main <- us_states %>%
+us_main <- us_states %>%
   filter(!name %in% c("Alaska", "Hawaii"))
-  
 
-  
-  
-  usa <- ggplot() +
-  geom_sf(data = us_main,
-          size = 1,
-          alpha = .5) +
-  geom_sf_label_repel(data = us_main,
-                      aes(label = postal),
-                      size = 3) +
-  labs(x="", y="") +
-  theme(legend.position = "F") +
-  annotation_north_arrow(location = "bl",
-                         which_north = "T",
-                         style = north_arrow_fancy_orienteering(),
-                         pad_x = unit(0.8, "in"), pad_y = unit(.2, "in")) +
-  annotation_scale(location = "bl",
-                   width_hint = 0.25)
-  
-  disease_data_state <- respiratory_diseases %>% 
-    mutate(postal = LocationAbbr) %>% 
-    select(DataValue, postal)
-  
-  us_main_joined <- us_main %>%
+disease_data_state <- respiratory_diseases %>% 
+  filter(!is.na(DataValue)) %>%
+  mutate(postal = LocationAbbr) %>% 
+  group_by(postal) %>%
+  summarise(DataValue = mean(DataValue, na.rm = TRUE))
+
+us_main_joined <- us_main %>%
   left_join(disease_data_state, by = "postal")
-  
-  # Need to figure out respiratory_diseases data
-  
-  ggplot() +
-  geom_sf(data = us_main_joined,
-          aes(fill = DataValue),
-          color = "black",
-          size = 0.4) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90") +
-  theme_minimal() +
-  labs(fill = "Respiratory\nDisease Rate",
-       title = "Respiratory Disease by State")
-  
-  
-  
+
+ggplot(us_main_joined) +
+  geom_sf(aes(fill = DataValue), color = "white", size = 0.3) +
+  scale_fill_viridis_c(
+    option = "plasma",
+    na.value = "grey85",
+    name = "Disease Rate"
+  ) +
+  annotation_scale(location = "bl", width_hint = 0.25) +
+  annotation_north_arrow(
+    location = "bl",
+    which_north = "true",
+    style = north_arrow_fancy_orienteering(),
+    pad_x = unit(0.5, "in"),
+    pad_y = unit(0.3, "in")
+  ) +
+  labs(
+    title = "Respiratory Disease Rates by State",
+    x = NULL,
+    y = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "right"
+  )
 ```
 
+This map effectively depicts the respiratory illness rates across the United States. As you can see, many of the highest rates are located in states with high populations, such as California, Florida and Texas. Comparing this to the results from previous plots, it's evident that pollution does not seem to be affected by high population, but disease rates are.
 
 
 ## Conclusion
 
-After completing our research our group found that the correlation between air quality and respiratory illnesses was not very strong. But when looking at specific pollutants such as ozone which primarily comes from vehicles the correlation was much stronger. Higher ozone levels had a strong positive correlation with higher rates of respiratory illnesses. There is also no strong correlation between the AQI and time. It had several sharp changes over the the years. On the contrary the rates of most respiratory illnesses has decreased within the past few years. Asthma rates increased between 2021 and 2022. 
+High population density does not necessarily correspond to higher pollution levels, and in many states the relationship between the two appears weak or inconsistent. Overall air pollution does appear to increase asthma rates, while having little to no measurable impact on other chronic respiratory illnesses. Ozone pollution, in particular, shows a strong positive correlation with respiratory illness prevalence, indicating that higher ozone levels are linked to greater health risks. Taken together, these results suggest that ozone pollution is a vital factor in respiratory health, whereas population size and general pollution levels have more limited or indirect effects.
+
+These findings highlight the importance of targeting ozone-producing emissions in public health policy and environmental regulation. While broad improvements in air quality may help marginally, focusing on the specific pollutants that most directly affect respiratory systems could be significantly more effective. Future research could examine differences between urban and rural regions, explore county-level variation more closely, or incorporate additional environmental factors, such as particulate matter or wildfire exposure. This way, we could gain a deeper understanding of what drives respiratory illness across the United States.
 
 
 ## Data Dictionary
@@ -458,7 +499,7 @@ After completing our research our group found that the correlation between air q
 
 
 ### Member Contributions
-Theo: Found chronic disease data set and examined how it relates to the air quality data set. Helped refine research question. Along with that, I cleaned the data to decide which rows should be kept and which rows are not considered respiratory. Filtered the data into a new table (respiratory_diseases), after cleaning the original data set.
+Theo: Found chronic disease data set and examined how it relates to the air quality data set. Helped refine research question. Along with that, I cleaned the data to decide which rows should be kept and which rows are not considered respiratory. Filtered the data into a new table (respiratory_diseases), after cleaning the original data set. Completed a data description and heklped with creating charts.
 Rose: Helped define research question as well as come up with follow up questions and how to best graph them. I wrote the Proposal Expectations Evaluation discussing what we worked on as a group. I also adjusted the research questions in response to feedback from the proposal as well as help to focus what parts of the datasets we wanted to use.    
 Joseph: PROPOSAL: Developed this file in coordination with team; examined data sources, created and refined research questions. PROGRESS REPORT: Set up population data integration with [readxl].  Cleaned that data and joined with previously created frames to make visualizations (both scatterplots). 
 
