@@ -15,7 +15,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,   
   message = FALSE
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 library(tidyverse)
 library(here)
 library(dplyr)
@@ -136,7 +136,7 @@ Once we've sorted both data sets as described above, we can answer the question;
 
 #### First, we'll look at all of the possible options for the Topic columns:
 
-```{r}
+```{r warning=FALSE}
 unique_topics <- unique(chronic_diseases$Topic)
 print(unique_topics)
 ```
@@ -254,7 +254,7 @@ As we looked further into our data set we decided to filter the chronic illness 
 
 ## Graphed Results
 
-```{r}
+```{r warning=FALSE}
  population_data_cleaned <- population_data %>%
   filter(.[[1]] != "United States") %>% 
   select(1, 8:ncol(.)) %>%
@@ -270,7 +270,7 @@ As we looked further into our data set we decided to filter the chronic illness 
 
 - Population size: Scatter plot with air quality on the y-axis and population on the x-axis
 
-```{r}
+```{r warning=FALSE}
   air_quality_all <- bind_rows(
   air_quality_2015,
   air_quality_2016,
@@ -318,7 +318,7 @@ ggplot(scatter_data, aes(x = Population, y = AQI, color = AQI)) +
 Given this visualization, there is fair support to say that population and AQI are positively correlated.  In addition, we can see how especially in lowly populated areas, the year 2020 resulted in most people staying indoors, leading to less pollution of the air. 
 
 
-```{r}
+```{r warning=FALSE}
 # Combine all air quality datasets into one long table
 aqi_long <- bind_rows(
   air_quality_2015 %>% mutate(Year = 2015),
@@ -349,7 +349,7 @@ ggplot(aqi_yearly, aes(x = Year, y = Avg_AQI)) +
   theme_minimal(base_size = 14)
 ```
 
-```{r}
+```{r warning=FALSE}
 # Build a dataset of illness rates by year and illness type
 illness_long <- respiratory_diseases %>%
   filter(!is.na(DataValue)) %>%
@@ -385,47 +385,9 @@ ggplot(illness_long, aes(x = Year, y = Rate, color = Illness)) +
 ```
 
 
-```{r}
-  state_lookup <- tibble(
-    State = state.name,
-    LocationAbbr = state.abb
-  )
-
-  aqi_state <- aqi_state %>%
-  left_join(state_lookup, by = c("State" = "State")) %>%
-  select(LocationAbbr, Year, AQI)
-  
-  #
-  respiratory_state <- respiratory_diseases %>%
-  filter(!is.na(DataValue)) %>%
-  group_by(LocationAbbr, Year = YearStart) %>%
-  summarise(
-    DiseaseRate = mean(DataValue, na.rm = TRUE),
-  )
-  
-  scatter_data_2 <- aqi_state %>%
-  left_join(respiratory_state, by = c("LocationAbbr", "Year")) %>%
-  filter(!is.na(DiseaseRate))
-  
-  
-  ggplot(scatter_data_2, aes(x = AQI, y = DiseaseRate, color = factor(Year))) +
-  geom_point(alpha = 0.7, size = 3) +
-  labs(
-    title = "Correlation of AQI with Respiratory Disease Rates",
-    x = "Average Max AQI",
-    y = "Respiratory Disease Rate",
-    color = "Year"
-  ) 
-```
-Here, we are looking strictly at AQI vs Respiratory disease rates over time.
-On average, as expected, lower AQI correlates to higher respiratory disease rates.
-
-In future iterations, this section will be updated to include an assessment of all variables, as in AQI, urbanity, and respiratory disease rates.
-
 
 ## Conclusion
 
-#Summarize your central narrative here. Present the key findings from each follow up question and explain how they collectively address the main research question. Finally, provide a clear and concise conclusion that directly responds to the main research question
 After completing our research our group found that the correlation between air quality and respiratory illnesses was not very strong. But when looking at specific pollutants such as ozone which primarily comes from vehicles the correlation was much stronger. Higher ozone levels had a strong positive correlation with higher rates of respiratory illnesses. There is also no strong correlation between the AQI and time. It had several sharp changes over the the years. On the contrary the rates of most respiratory illnesses has decreased within the past few years. Asthma rates increased between 2021 and 2022. 
 
 
