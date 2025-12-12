@@ -290,23 +290,27 @@ population_long <- population_data_cleaned %>%
   
   # Group Air Quality by State
   aqi_county <- air_quality_all %>%
-  group_by(County, Year) %>%
+  group_by(County) %>%
   summarise(AQI = mean(Max.AQI, na.rm = TRUE))
 
   scatter_data <- population_long %>%
-  left_join(aqi_county, by = c("County", "Year")) %>% 
+  left_join(aqi_county, by = c("County")) %>% 
     filter(!is.na(AQI) & !is.na(Population))
   
   
-  ggplot(scatter_data, aes(x = Population, y = AQI, color = factor(Year))) +
-  geom_point(alpha = 0.6) +
+ggplot(scatter_data, aes(x = Population, y = AQI, color = AQI)) +
+  geom_point(alpha = 0.7, size = 2) +
   scale_x_continuous(labels = scales::comma) +
+  scale_y_continuous(
+    limits = c(0, 800),  # clip y-axis to a reasonable max
+  ) +
   labs(
-    title = "County Population vs Average Max AQI (2015-2020)",
+    title = "County Population vs Average Max AQI",
     x = "County Population",
     y = "Average Max AQI",
-    color = "Year"
-  ) 
+    color = "AQI"
+  ) +
+  theme_minimal(base_size = 14)
 ```
 Given this visualization, there is fair support to say that population and AQI are positively correlated.  In addition, we can see how especially in lowly populated areas, the year 2020 resulted in most people staying indoors, leading to less pollution of the air. 
 
