@@ -299,10 +299,13 @@ population_long <- population_data_cleaned %>%
   
   
 ggplot(scatter_data, aes(x = Population, y = AQI, color = AQI)) +
-  geom_point(alpha = 0.7, size = 2) +
-  scale_x_continuous(labels = scales::comma) +
+  geom_jitter(alpha = 0.5, size = 2, width = 20000, height = 3) +
+  scale_x_continuous(
+    labels = scales::comma,
+    limits = c(0, 6000000)
+    ) +
   scale_y_continuous(
-    limits = c(0, 800),  # clip y-axis to a reasonable max
+    limits = c(0, 450),  # clip y-axis to a reasonable max
   ) +
   labs(
     title = "County Population vs Average Max AQI",
