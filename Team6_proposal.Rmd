@@ -29,6 +29,7 @@ library(here)
 library(dplyr)
 library(readxl)
 library(viridis)
+library(sf)
 
 chronic_diseases <- read.csv(here("data/U.S._Chronic_Disease_Indicators.csv"))
 air_quality_2015 <- read.csv(here("data/annual_aqi_by_county_2015.csv"))
@@ -41,7 +42,7 @@ air_quality_2021 <- read.csv(here("data/annual_aqi_by_county_2021.csv"))
 
 population_data <- read_excel(here("data/co-est2020int-pop.xlsx"), skip=3)
 
-
+world <- read_sf(here("data/ne_110m_admin_0_countries.shp"))
 
 ```
 ![An air-polluted highway in India](https://www.usatoday.com/gcdn/-mm-/471aaf7f3239eea52e40fa1593f3f5fe323c72a4/c=0-266-3225-2088/local/-/media/2017/11/08/USATODAY/USATODAY/636457399868151922-AP-India-Air-Pollution.5.jpg)
@@ -298,24 +299,24 @@ population_long <- population_data_cleaned %>%
     filter(!is.na(AQI) & !is.na(Population))
   
   
-ggplot(scatter_data, aes(x = Population, y = AQI, color = AQI)) +
-  geom_jitter(alpha = 0.5, size = 2, width = 20000, height = 3) +
-  scale_x_continuous(
-    labels = scales::comma,
-    limits = c(0, 6000000)
-    ) +
-  scale_y_continuous(
-    limits = c(0, 450),  # clip y-axis to a reasonable max
-  ) +
+ggplot(scatter_data, aes(x = Population, y = AQI)) +
+  stat_density_2d(aes(fill = ..density..), geom = "raster", contour = FALSE) +
+  scale_fill_viridis_c() +
+  scale_x_continuous(labels = scales::comma, limits = c(0, 6000000)) +
+  scale_y_continuous(limits = c(0, 450)) +
   labs(
     title = "County Population vs Average Max AQI",
     x = "County Population",
     y = "Average Max AQI",
-    color = "AQI"
+    fill = "Density"
   ) +
   theme_minimal(base_size = 14)
+
 ```
 Given this visualization, there is fair support to say that population and AQI are positively correlated.  In addition, we can see how especially in lowly populated areas, the year 2020 resulted in most people staying indoors, leading to less pollution of the air. 
+
+
+
 
 
 ```{r}
