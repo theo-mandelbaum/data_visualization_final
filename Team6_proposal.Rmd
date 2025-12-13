@@ -499,7 +499,7 @@ These findings highlight the importance of targeting ozone-producing emissions i
 
 
 ### Member Contributions
-Theo: Found chronic disease data set and examined how it relates to the air quality data set. Helped refine research question. Along with that, I cleaned the data to decide which rows should be kept and which rows are not considered respiratory. Filtered the data into a new table (respiratory_diseases), after cleaning the original data set. Completed a data description and heklped with creating charts.
+Theo: Found chronic disease data set and examined how it relates to the air quality data set. Helped refine research question. Along with that, I cleaned the data to decide which rows should be kept and which rows are not considered respiratory. Filtered the data into a new table (respiratory_diseases), after cleaning the original data set. Completed a data description and helped with creating charts.
 Rose: Helped define research question as well as come up with follow up questions and how to best graph them. I wrote the Proposal Expectations Evaluation discussing what we worked on as a group. I also adjusted the research questions in response to feedback from the proposal as well as help to focus what parts of the datasets we wanted to use.    
 Joseph: PROPOSAL: Developed this file in coordination with team; examined data sources, created and refined research questions. PROGRESS REPORT: Set up population data integration with [readxl].  Cleaned that data and joined with previously created frames to make visualizations (both scatterplots). 
 
